@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/diegoalonso/Documents/Modular/gantt-flow/components/button.jsx"],"sourcesContent":["'use client';\n\nexport default function Button({ text, type = \"button\", bgColor = \"bg-sky-200\", border = \"\", hover = \"\" }) {\n    return (\n        <button\n            type={type}\n            className={`px-4 py-2 rounded-lg font-bold ${bgColor} transition ${border} ${hover}`}\n            onClick={() => alert('Button clicked: ' + text)}\n        >\n            {text}\n        </button>\n    );\n}\n\n"],"names":[],"mappings":";;;;AAAA;;AAEe,SAAS,OAAO,EAAE,IAAI,EAAE,OAAO,QAAQ,EAAE,UAAU,YAAY,EAAE,SAAS,EAAE,EAAE,QAAQ,EAAE,EAAE;IACrG,qBACI,6LAAC;QACG,MAAM;QACN,WAAW,CAAC,+BAA+B,EAAE,QAAQ,YAAY,EAAE,OAAO,CAAC,EAAE,OAAO;QACpF,SAAS,IAAM,MAAM,qBAAqB;kBAEzC;;;;;;AAGb;KAVwB"}},
+    {"offset": {"line": 31, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}
