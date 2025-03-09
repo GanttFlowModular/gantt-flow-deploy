@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/diegoalonso/Library/CloudStorage/GoogleDrive-diegoalonso872%40gmail.com/Mi%20unidad/UDG%20INNI/Proyecto%20Modular/Modular/gantt-flow/front/app/cascaron/page.tsx"],"sourcesContent":["'use client';\n\nexport default function Dashboard() {\n    return (\n        <div className=\"min-h-screen bg-gray-100 flex flex-col items-center justify-center\">\n            <p className=\"text-red-500 text-2xl mb-4\">Debug: Page Loaded</p>\n            <div className=\"w-64 h-32 bg-blue-500 rounded-lg shadow-lg border-4 border-black\"></div>\n            <p className=\"text-green-500 text-2xl mt-4\">Debug: Rectangle Below</p>\n        </div>\n    );\n}"],"names":[],"mappings":";;;;AAAA;;AAEe,SAAS;IACpB,qBACI,8OAAC;QAAI,WAAU;;0BACX,8OAAC;gBAAE,WAAU;0BAA6B;;;;;;0BAC1C,8OAAC;gBAAI,WAAU;;;;;;0BACf,8OAAC;gBAAE,WAAU;0BAA+B;;;;;;;;;;;;AAGxD"}},
+    {"offset": {"line": 47, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}
