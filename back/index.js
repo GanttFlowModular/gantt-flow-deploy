@@ -1,27 +1,9 @@
-const express = require('express');
-const mongoose = require('mongoose');
-require('dotenv').config();
+import express from 'express';
+import connectToDB from './config/db.js';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+connectToDB();
 
-// Conectar a MongoDB Atlas
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+app.listen(3001, () => {
+    console.log('Server started on port 3001');
 })
-    .then(() => console.log('Conectado a MongoDB Atlas'))
-    .catch(err => console.log('Error al conectar:', err));
-
-// Middleware para parsear JSON
-app.use(express.json());
-
-// Ruta de prueba
-app.get('/', (req, res) => {
-    res.send('¡Hola! El servidor funciona.');
-});
-
-// Iniciar el servidor
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
-});
