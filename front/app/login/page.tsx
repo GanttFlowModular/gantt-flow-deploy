@@ -4,6 +4,7 @@ import { handleSignIn, handleSignOut } from '../lib/auth';
 import { useSession, signIn } from "next-auth/react";
 import Button from "@/components/button";
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -67,7 +68,7 @@ export default function Login() {
                                 />
 
                                 <Button
-                                    icon="/iniciarSesion.svg"
+                                    icon="/loginButton.svg"
                                     iconWidth={500}
                                     iconHeight={64}
                                     bgColor="bg-transparent"
@@ -75,11 +76,11 @@ export default function Login() {
                                 />
 
                                 <div className="text-center space-y-4">
-                                    <Link href="/about" className="text-gray-400 hover:underline block">
+                                    <Link href="/" className="text-gray-400 hover:underline block">
                                         ¿Olvidaste tu contraseña?
                                     </Link>
 
-                                    <Link href="/about" className="text-gray-400 hover:underline block">
+                                    <Link href="/signUp" className="text-gray-400 hover:underline block">
                                         ¿No tienes cuenta? Regístrate
                                     </Link>
                                 </div>
@@ -87,7 +88,22 @@ export default function Login() {
                         </div>
                     </div>
 
-                    <div className="w-[640px] bg-green-500 lg:block hidden">
+                    <div className="flex flex-col justify-center items-center space-y-8 w-[700px] bg-green-500 border">
+                        <div>
+                            <Image
+                                className="dark:invert"
+                                src="/logoSignUpLogin.svg"
+                                alt="Logo de GanttFlow"
+                                width={450}
+                                height={207}
+                                priority
+                            />
+                        </div>
+
+                        <div className='flex text-white text-xl font-semibold'>
+                            <p>La solución que necesitas para tu proyecto</p>
+                        </div>
+
                     </div>
                 </>
 

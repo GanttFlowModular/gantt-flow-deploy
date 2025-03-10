@@ -131,7 +131,7 @@ function Home() {
                             text: "Iniciar sesión",
                             bgColor: "#FFFFFF",
                             border: "border border-gray-200",
-                            hover: "hover:bg-gray-100 hover:text-green-700",
+                            hover: "hover:bg-gray-100 hover:text-green-500",
                             redirectTo: "/login"
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
@@ -147,10 +147,10 @@ function Home() {
                         className: "ml-4",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$button$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
                             text: "Registrate",
-                            bgColor: "bg-green-400",
+                            bgColor: "bg-green-500",
                             border: "border border-gray-200",
-                            hover: "hover:bg-gray-100 hover:text-green-700",
-                            redirectTo: "/register"
+                            hover: "hover:bg-gray-100 hover:text-green-500",
+                            redirectTo: "/signUp"
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
                             lineNumber: 51,
@@ -232,82 +232,8 @@ function Home() {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
-                className: "row-start-3 flex gap-6 flex-wrap items-center justify-center mt-48",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                        className: "flex items-center gap-2 hover:underline hover:underline-offset-4",
-                        href: "https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app",
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
-                                "aria-hidden": true,
-                                src: "/file.svg",
-                                alt: "File icon",
-                                width: 16,
-                                height: 16
-                            }, void 0, false, {
-                                fileName: "[project]/app/page.tsx",
-                                lineNumber: 94,
-                                columnNumber: 11
-                            }, this),
-                            "Learn"
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 88,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                        className: "flex items-center gap-2 hover:underline hover:underline-offset-4",
-                        href: "https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app",
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
-                                "aria-hidden": true,
-                                src: "/window.svg",
-                                alt: "Window icon",
-                                width: 16,
-                                height: 16
-                            }, void 0, false, {
-                                fileName: "[project]/app/page.tsx",
-                                lineNumber: 109,
-                                columnNumber: 11
-                            }, this),
-                            "Examples"
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 103,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                        className: "flex items-center gap-2 hover:underline hover:underline-offset-4",
-                        href: "https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app",
-                        target: "_blank",
-                        rel: "noopener noreferrer",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
-                                "aria-hidden": true,
-                                src: "/globe.svg",
-                                alt: "Globe icon",
-                                width: 16,
-                                height: 16
-                            }, void 0, false, {
-                                fileName: "[project]/app/page.tsx",
-                                lineNumber: 124,
-                                columnNumber: 11
-                            }, this),
-                            "Go to nextjs.org →"
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/app/page.tsx",
-                        lineNumber: 118,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
+                className: "row-start-3 flex gap-6 flex-wrap items-center justify-center mt-48"
+            }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
                 lineNumber: 87,
                 columnNumber: 7
