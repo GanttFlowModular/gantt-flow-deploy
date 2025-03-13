@@ -49,7 +49,21 @@ export const sendRecoveryEmail = async (req, res) => {
       to: user.email,
       from: process.env.EMAIL_USER,
       subject: 'Restablecimiento de contraseña Gantt-Flow',
-      text: `Haz clic en el siguiente enlace para restablecer tu contraseña:\n\n${resetUrl}\n\n`,
+      html: `
+                <div style="font-family: Arial, sans-serif; color: #333;">
+                    <h2 style="color: #4CAF50;">Hola, ${user.name}</h2>
+                    <p>Hemos recibido una solicitud para restablecer tu contraseña en <strong>Gantt-Flow</strong>.</p>
+                    <p>Por favor, haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+                    <p>
+                        <a href="${resetUrl}" style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+                            Restablecer contraseña
+                        </a>
+                    </p>
+                    <p>Si no solicitaste este cambio, puedes ignorar este correo.</p>
+                    <p>Gracias,</p>
+                    <p>El equipo de <strong>Gantt-Flow</strong></p>
+                </div>
+            `,
     };
 
     await transporter.sendMail(mailOptions);
