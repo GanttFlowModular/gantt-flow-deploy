@@ -18,7 +18,7 @@ export default function Dashboard() {
 
         if (!token || !userData) {
             // Si no hay token o datos de usuario, redirigir al login
-            router.push('/login');
+            router.push('/auth/login');
         } else {
             // Si hay datos de usuario, parsearlos y guardarlos en el estado
             setUser(JSON.parse(userData));
@@ -44,7 +44,7 @@ export default function Dashboard() {
         localStorage.removeItem('user');
 
         // Redirigir al login
-        router.push('/login');
+        router.push('/auth/login');
     };
 
     if (!user) {

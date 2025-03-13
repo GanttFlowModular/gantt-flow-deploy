@@ -19,3 +19,21 @@ export const loginUser = async (userData: { email: string, password: string }) =
         throw error;
     }
 };
+
+export const sendRecoveryEmail = async (email: string) => {
+    try {
+        const response = await axios.post(`${API_URL}/users/forgot-password`, { email });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const resetPassword = async (token: string, newPassword: string) => {
+    try {
+        const response = await axios.post(`${API_URL}/users/reset-password`, { token, newPassword });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};

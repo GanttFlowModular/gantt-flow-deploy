@@ -44,7 +44,7 @@ export default function Home() {
             bgColor="#FFFFFF"
             border="border border-gray-200"
             hover="hover:bg-gray-100 hover:text-green-500"
-            redirectTo="/login"
+            redirectTo="/auth/login"
           />
         </div>
         <div className="ml-4">
@@ -53,7 +53,7 @@ export default function Home() {
             bgColor="bg-green-500"
             border="border border-gray-200"
             hover="hover:bg-gray-100 hover:text-green-500"
-            redirectTo="/signUp"
+            redirectTo="/auth/signUp"
           />
         </div>
       </header >

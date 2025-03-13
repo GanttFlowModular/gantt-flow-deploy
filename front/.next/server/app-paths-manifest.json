@@ -1,8 +1,15 @@
 {
-  "/login/page": "app/login/page.js",
+  "/signUp/page": "app/signUp/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/_not-found/page": "app/_not-found/page.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/login/page": "app/login/page.js",
+  "/forgot-password/page": "app/forgot-password/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/reset-password/page": "app/reset-password/page.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/signUp/page": "app/signUp/page.js"
+  "/page": "app/page.js",
+  "/auth/login/page": "app/auth/login/page.js",
+  "/auth/signUp/page": "app/auth/signUp/page.js",
+  "/auth/forgot-password/page": "app/auth/forgot-password/page.js",
+  "/auth/reset-password/page": "app/auth/reset-password/page.js"
 }

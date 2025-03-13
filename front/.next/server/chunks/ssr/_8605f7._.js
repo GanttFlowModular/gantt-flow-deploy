@@ -132,7 +132,7 @@ function Home() {
                             bgColor: "#FFFFFF",
                             border: "border border-gray-200",
                             hover: "hover:bg-gray-100 hover:text-green-500",
-                            redirectTo: "/login"
+                            redirectTo: "/auth/login"
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
                             lineNumber: 42,
@@ -150,7 +150,7 @@ function Home() {
                             bgColor: "bg-green-500",
                             border: "border border-gray-200",
                             hover: "hover:bg-gray-100 hover:text-green-500",
-                            redirectTo: "/signUp"
+                            redirectTo: "/auth/signUp"
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
                             lineNumber: 51,

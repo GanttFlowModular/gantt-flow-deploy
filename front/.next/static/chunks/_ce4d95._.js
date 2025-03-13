@@ -95,7 +95,7 @@ function Dashboard() {
             const userData = localStorage.getItem('user');
             if (!token || !userData) {
                 // Si no hay token o datos de usuario, redirigir al login
-                router.push('/login');
+                router.push('/auth/login');
             } else {
                 // Si hay datos de usuario, parsearlos y guardarlos en el estado
                 setUser(JSON.parse(userData));
@@ -123,7 +123,7 @@ function Dashboard() {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         // Redirigir al login
-        router.push('/login');
+        router.push('/auth/login');
     };
     if (!user) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {

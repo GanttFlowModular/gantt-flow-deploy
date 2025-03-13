@@ -68,7 +68,9 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 {
 __turbopack_esm__({
     "createUser": (()=>createUser),
-    "loginUser": (()=>loginUser)
+    "loginUser": (()=>loginUser),
+    "resetPassword": (()=>resetPassword),
+    "sendRecoveryEmail": (()=>sendRecoveryEmail)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/axios/lib/axios.js [app-client] (ecmascript)");
 ;
@@ -84,6 +86,27 @@ const createUser = async (userData)=>{
 const loginUser = async (userData)=>{
     try {
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${API_URL}/users/login`, userData);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+const sendRecoveryEmail = async (email)=>{
+    try {
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${API_URL}/users/forgot-password`, {
+            email
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+const resetPassword = async (token, newPassword)=>{
+    try {
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${API_URL}/users/reset-password`, {
+            token,
+            newPassword
+        });
         return response.data;
     } catch (error) {
         throw error;
@@ -253,7 +276,7 @@ function Login() {
                                     className: "text-center space-y-4",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                            href: "/",
+                                            href: "/forgot-password",
                                             className: "text-gray-400 hover:underline block",
                                             children: "¿Olvidaste tu contraseña?"
                                         }, void 0, false, {

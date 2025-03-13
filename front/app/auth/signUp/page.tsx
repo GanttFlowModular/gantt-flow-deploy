@@ -5,33 +5,26 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { loginUser } from '../lib/api'; // Importa la función para hacer login en tu backend
+import { createUser } from '../../lib/api';
 
-export default function Login() {
+export default function SignUp() {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [mobile, setMobile] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError(''); // Limpiar errores previos
+        setError('');
 
         try {
-            // Llamar a la API de tu backend para hacer login
-            const response = await loginUser({ email, password });
-            console.log('Login exitoso:', response);
-
-            // Guardar el token en localStorage o en el estado global
-            localStorage.setItem('token', response.token);
-
-            // Guardar los datos del usuario en localStorage
-            localStorage.setItem('user', JSON.stringify(response.user));
-
-            // Redirigir al dashboard después del login
-            router.push('/dashboard');
+            const response = await createUser({ name, email, mobile, password });
+            console.log('Registro exitoso:', response);
+            router.push('/auth/login');
         } catch (err) {
-            setError('Error al iniciar sesión. Verifica tus credenciales.');
+            setError('Error al registrarse. Por favor, intenta de nuevo.');
             console.error(err);
         }
     };
@@ -41,10 +34,22 @@ export default function Login() {
             {/* Sección del formulario */}
             <div className="flex-1 flex flex-col items-center justify-center p-8">
                 <div className="w-full max-w-md">
-                    <h1 className="font-bold text-2xl mb-6 text-center">Iniciar sesión</h1>
+                    <h1 className="font-bold text-2xl mb-6 text-center">Regístrate para continuar</h1>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-4">
+                            <div>
+                                <label className="font-bold">Nombre</label>
+                                <input
+                                    type="text"
+                                    placeholder="Escribe aquí tu nombre"
+                                    className="w-full px-4 py-3 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                />
+                            </div>
+
                             <div>
                                 <label className="font-bold">Correo</label>
                                 <input
@@ -53,6 +58,18 @@ export default function Login() {
                                     className="w-full px-4 py-3 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <label className="font-bold">Teléfono</label>
+                                <input
+                                    type="text"
+                                    placeholder="Escribe aquí tu teléfono"
+                                    className="w-full px-4 py-3 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    value={mobile}
+                                    onChange={(e) => setMobile(e.target.value)}
                                     required
                                 />
                             </div>
@@ -73,7 +90,7 @@ export default function Login() {
                         {error && <p className="text-red-500 text-center">{error}</p>}
 
                         <Button
-                            icon="/loginButton.svg"
+                            icon="/signUpButton.svg"
                             iconWidth={500}
                             iconHeight={64}
                             bgColor="bg-transparent"
@@ -82,12 +99,8 @@ export default function Login() {
                         />
 
                         <div className="text-center space-y-4">
-                            <Link href="/" className="text-gray-400 hover:underline block">
-                                ¿Olvidaste tu contraseña?
-                            </Link>
-
-                            <Link href="/signUp" className="text-gray-400 hover:underline block">
-                                ¿No tienes cuenta? Regístrate
+                            <Link href="/auth/login" className="text-gray-400 hover:underline block">
+                                ¿Ya tienes una cuenta? Inicia sesión
                             </Link>
                         </div>
                     </form>

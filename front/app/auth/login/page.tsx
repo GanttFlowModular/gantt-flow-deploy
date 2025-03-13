@@ -5,12 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createUser } from '../lib/api';
+import { loginUser } from '../../lib/api';
 
-export default function SignUp() {
-    const [name, setName] = useState('');
+export default function Login() {
     const [email, setEmail] = useState('');
-    const [mobile, setMobile] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
@@ -20,11 +18,15 @@ export default function SignUp() {
         setError('');
 
         try {
-            const response = await createUser({ name, email, mobile, password });
-            console.log('Registro exitoso:', response);
-            router.push('/login');
+            const response = await loginUser({ email, password });
+            console.log('Login exitoso:', response);
+
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('user', JSON.stringify(response.user));
+
+            router.push('/dashboard');
         } catch (err) {
-            setError('Error al registrarse. Por favor, intenta de nuevo.');
+            setError('Error al iniciar sesión. Verifica tus credenciales.');
             console.error(err);
         }
     };
@@ -34,22 +36,10 @@ export default function SignUp() {
             {/* Sección del formulario */}
             <div className="flex-1 flex flex-col items-center justify-center p-8">
                 <div className="w-full max-w-md">
-                    <h1 className="font-bold text-2xl mb-6 text-center">Regístrate para continuar</h1>
+                    <h1 className="font-bold text-2xl mb-6 text-center">Iniciar sesión</h1>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-4">
-                            <div>
-                                <label className="font-bold">Nombre</label>
-                                <input
-                                    type="text"
-                                    placeholder="Escribe aquí tu nombre"
-                                    className="w-full px-4 py-3 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    required
-                                />
-                            </div>
-
                             <div>
                                 <label className="font-bold">Correo</label>
                                 <input
@@ -58,18 +48,6 @@ export default function SignUp() {
                                     className="w-full px-4 py-3 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                />
-                            </div>
-
-                            <div>
-                                <label className="font-bold">Teléfono</label>
-                                <input
-                                    type="text"
-                                    placeholder="Escribe aquí tu teléfono"
-                                    className="w-full px-4 py-3 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500"
-                                    value={mobile}
-                                    onChange={(e) => setMobile(e.target.value)}
                                     required
                                 />
                             </div>
@@ -90,7 +68,7 @@ export default function SignUp() {
                         {error && <p className="text-red-500 text-center">{error}</p>}
 
                         <Button
-                            icon="/signUpButton.svg"
+                            icon="/loginButton.svg"
                             iconWidth={500}
                             iconHeight={64}
                             bgColor="bg-transparent"
@@ -99,8 +77,12 @@ export default function SignUp() {
                         />
 
                         <div className="text-center space-y-4">
-                            <Link href="/login" className="text-gray-400 hover:underline block">
-                                ¿Ya tienes una cuenta? Inicia sesión
+                            <Link href="/auth/forgot-password" className="text-gray-400 hover:underline block">
+                                ¿Olvidaste tu contraseña?
+                            </Link>
+
+                            <Link href="/auth/signUp" className="text-gray-400 hover:underline block">
+                                ¿No tienes cuenta? Regístrate
                             </Link>
                         </div>
                     </form>
