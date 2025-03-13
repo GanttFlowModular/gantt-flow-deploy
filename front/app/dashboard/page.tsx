@@ -1,18 +1,30 @@
 'use client';
 
-import { useSession, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link"; // Import Link from Next.js
+import Link from "next/link";
 import Button from "../../components/button";
 
 export default function Dashboard() {
-    const { data: session, status } = useSession();
     const router = useRouter();
     const [date, setDate] = useState('');
+    const [user, setUser] = useState<{ name: string } | null>(null);
 
     useEffect(() => {
+        // Obtener el token y los datos del usuario desde localStorage
+        const token = localStorage.getItem('token');
+        const userData = localStorage.getItem('user');
+
+        if (!token || !userData) {
+            // Si no hay token o datos de usuario, redirigir al login
+            router.push('/login');
+        } else {
+            // Si hay datos de usuario, parsearlos y guardarlos en el estado
+            setUser(JSON.parse(userData));
+        }
+
+        // Formatear la fecha
         const today = new Date();
         const dayName = today.toLocaleDateString('es-MX', { weekday: 'long' });
         const month = today.toLocaleDateString('es-MX', { month: 'long' });
@@ -24,16 +36,19 @@ export default function Dashboard() {
 
         const formattedDate = `${capitalizedDayName}, ${day} de ${capitalizedMonth} de ${year}`;
         setDate(formattedDate);
-    }, []);
+    }, [router]);
 
-    useEffect(() => {
-        if (status === "unauthenticated") {
-            router.push("/");
-        }
-    }, [status, router]);
+    const handleLogout = () => {
+        // Eliminar el token y los datos del usuario de localStorage
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
 
-    if (status === "loading") {
-        return <p>Cargando...</p>;
+        // Redirigir al login
+        router.push('/login');
+    };
+
+    if (!user) {
+        return <p>Cargando...</p>; // Mostrar un mensaje de carga mientras se verifica la autenticación
     }
 
     return (
@@ -166,16 +181,16 @@ export default function Dashboard() {
                             iconHeight={30}
                             bgColor="bg-transparent"
                             border="border-none"
-                            onClick={() => signOut()}
+                            onClick={handleLogout}
                         />
-                        <span onClick={() => signOut()} className="cursor-pointer">
+                        <span onClick={handleLogout} className="cursor-pointer">
                             Cerrar sesión
                         </span>
                     </div>
                 </div>
                 <div className="flex flex-col items-center ml-52">
                     <p className="mt-14 font-semibold">{date}</p>
-                    <h1 className="text-7xl mt-4">Hola, {session?.user?.name || "Usuario"}</h1>
+                    <h1 className="text-7xl mt-4">Hola, {user.name}</h1>
                 </div>
             </main>
         </div>

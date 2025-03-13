@@ -1,115 +1,116 @@
 'use client';
 
-import { handleSignIn, handleSignOut } from '../lib/auth';
-import { useSession, signIn } from "next-auth/react";
 import Button from "@/components/button";
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { loginUser } from '../lib/api'; // Importa la función para hacer login en tu backend
 
 export default function Login() {
-    const { data: session } = useSession();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const router = useRouter();
 
-    useEffect(() => {
-        if (session) {
-            router.push('/dashboard');
-        }
-    }, [session, router]);
-
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission logic here
+        setError(''); // Limpiar errores previos
+
+        try {
+            // Llamar a la API de tu backend para hacer login
+            const response = await loginUser({ email, password });
+            console.log('Login exitoso:', response);
+
+            // Guardar el token en localStorage o en el estado global
+            localStorage.setItem('token', response.token);
+
+            // Guardar los datos del usuario en localStorage
+            localStorage.setItem('user', JSON.stringify(response.user));
+
+            // Redirigir al dashboard después del login
+            router.push('/dashboard');
+        } catch (err) {
+            setError('Error al iniciar sesión. Verifica tus credenciales.');
+            console.error(err);
+        }
     };
 
     return (
         <main className="flex h-screen">
+            {/* Sección del formulario */}
+            <div className="flex-1 flex flex-col items-center justify-center p-8">
+                <div className="w-full max-w-md">
+                    <h1 className="font-bold text-2xl mb-6 text-center">Iniciar sesión</h1>
 
-            {session ? (
-                <div>Redirecting to dashboard...</div>
-            ) : (
-
-                <>
-                    <div className="flex-1 flex flex-col items-start justify-center">
-                        <div className="ml-40">
-                            <h1 className="font-bold text-[25px]">Iniciar sesión</h1>
-
-                            <form onSubmit={handleSubmit} className='space-y-7'>
-                                <Button
-                                    icon="/loginGoogle.svg"
-                                    iconWidth={500}
-                                    iconHeight={64}
-                                    bgColor="bg-transparent"
-                                    border="border-none"
-                                    onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-                                    redirectTo=''// Se añade para evitar error de TypeScript
-                                />
-
-                                <hr className="border-t-2 border-gray-200 my-4 w-full" />
-
-                                <p className="font-bold">Correo</p>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="space-y-4">
+                            <div>
+                                <label className="font-bold">Correo</label>
                                 <input
                                     type="email"
                                     placeholder="Escribe aquí tu correo"
-                                    className="w-full pl-4 py-4 border rounded-lg bg-gray-50"
+                                    className="w-full px-4 py-3 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    required
                                 />
-                                <p className="font-bold">Contraseña</p>
+                            </div>
+
+                            <div>
+                                <label className="font-bold">Contraseña</label>
                                 <input
                                     type="password"
+                                    placeholder="Escribe aquí tu contraseña"
+                                    className="w-full px-4 py-3 border rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    placeholder="Escribe aquí tu contraseña"
-                                    className="w-full pl-4 py-4 border rounded-lg bg-gray-50"
+                                    required
                                 />
-
-                                <Button
-                                    icon="/loginButton.svg"
-                                    iconWidth={500}
-                                    iconHeight={64}
-                                    bgColor="bg-transparent"
-                                    border="border-none"
-                                />
-
-                                <div className="text-center space-y-4">
-                                    <Link href="/" className="text-gray-400 hover:underline block">
-                                        ¿Olvidaste tu contraseña?
-                                    </Link>
-
-                                    <Link href="/signUp" className="text-gray-400 hover:underline block">
-                                        ¿No tienes cuenta? Regístrate
-                                    </Link>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col justify-center items-center space-y-8 w-[700px] bg-green-500 border">
-                        <div>
-                            <Image
-                                className="dark:invert"
-                                src="/logoSignUpLogin.svg"
-                                alt="Logo de GanttFlow"
-                                width={450}
-                                height={207}
-                                priority
-                            />
+                            </div>
                         </div>
 
-                        <div className='flex text-white text-xl font-semibold'>
-                            <p>La solución que necesitas para tu proyecto</p>
+                        {error && <p className="text-red-500 text-center">{error}</p>}
+
+                        <Button
+                            icon="/loginButton.svg"
+                            iconWidth={500}
+                            iconHeight={64}
+                            bgColor="bg-transparent"
+                            border="border-none"
+                            type="submit"
+                        />
+
+                        <div className="text-center space-y-4">
+                            <Link href="/" className="text-gray-400 hover:underline block">
+                                ¿Olvidaste tu contraseña?
+                            </Link>
+
+                            <Link href="/signUp" className="text-gray-400 hover:underline block">
+                                ¿No tienes cuenta? Regístrate
+                            </Link>
                         </div>
+                    </form>
+                </div>
+            </div>
 
-                    </div>
-                </>
+            {/* Sección de la imagen */}
+            <div className="hidden lg:flex flex-col justify-center items-center space-y-8 w-[700px] bg-green-500 border">
+                <div>
+                    <Image
+                        className="dark:invert"
+                        src="/logoSignUpLogin.svg"
+                        alt="Logo de GanttFlow"
+                        width={450}
+                        height={207}
+                        priority
+                    />
+                </div>
 
-
-            )}
-
+                <div className="flex text-white text-xl font-semibold">
+                    <p>La solución que necesitas para tu proyecto</p>
+                </div>
+            </div>
         </main>
     );
 }
