@@ -5,11 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { loginUser } from '../../lib/api';
+import { loginUser  } from '../../lib/api';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [role, setRole] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
 
@@ -18,13 +19,19 @@ export default function Login() {
         setError('');
 
         try {
-            const response = await loginUser({ email, password });
+            const response = await loginUser ({ email, password });
             console.log('Login exitoso:', response);
+            console.log('Rol del usuario:', response.user.role);
 
             localStorage.setItem('token', response.token);
             localStorage.setItem('user', JSON.stringify(response.user));
 
-            router.push('/dashboard');
+            // Verificar el rol del usuario
+            if (response.user.role === 'admin') {
+                router.push('/admin/users'); // Redirigir a la interfaz de administrador
+            } else {
+                router.push('/dashboard'); // Redirigir a la interfaz normal
+            }
         } catch (err) {
             setError('Error al iniciar sesión. Verifica tus credenciales.');
             console.error(err);

@@ -9,7 +9,7 @@ export const createUser = async (userData: { name: string, email: string, mobile
     } catch (error) {
         throw error;
     }
-};
+}
 
 export const loginUser = async (userData: { email: string, password: string }) => {
     try {
@@ -18,7 +18,7 @@ export const loginUser = async (userData: { email: string, password: string }) =
     } catch (error) {
         throw error;
     }
-};
+}
 
 export const sendRecoveryEmail = async (email: string) => {
     try {
@@ -27,7 +27,7 @@ export const sendRecoveryEmail = async (email: string) => {
     } catch (error) {
         throw error;
     }
-};
+}
 
 export const resetPassword = async (token: string, newPassword: string) => {
     try {
@@ -36,4 +36,5 @@ export const resetPassword = async (token: string, newPassword: string) => {
     } catch (error) {
         throw error;
     }
-};
+}
+
