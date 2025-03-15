@@ -7,7 +7,7 @@ import nodemailer from "nodemailer";
 
 export const getUsers = async (req, res) => {
     try {
-        const users = await User.find({});
+        const users = await User.find();
         res.status(200).json({ success: true, data: users });
     } catch (error) {
         console.log("error in fetching users:", error.message);
