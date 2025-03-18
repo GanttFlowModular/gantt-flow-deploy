@@ -1,6 +1,13 @@
 {
-  "/admin/users/page": "app/admin/users/page.js",
+  "/admin/users/permissions/page": "app/admin/users/permissions/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/admin/users/permissions/page": "app/admin/users/permissions/page.js"
+  "/admin/users/page": "app/admin/users/page.js",
+  "/page": "app/page.js",
+  "/home/page": "app/home/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/auth/login/page": "app/auth/login/page.js",
+  "/admin/cascaron/page": "app/admin/cascaron/page.js",
+  "/admin/settings/page": "app/admin/settings/page.js",
+  "/cascaron/page": "app/cascaron/page.js"
 }

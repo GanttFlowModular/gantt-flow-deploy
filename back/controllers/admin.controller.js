@@ -1,5 +1,6 @@
 import User from '../model/users.model..js';
 import bcrypt from 'bcrypt';
+import mongoose from 'mongoose';
 import { createUser, deleteUser, getUsers, updatedUser } from "../controllers/users.controller.js";
 
 export const createUserAdmin = createUser;
@@ -23,10 +24,10 @@ export const getUserById = async (req, res) => {
 }
 
 export const assignPermissions = async (req, res) => {
-    const { userId } = req.params;
-    const { permissions } = req.body;
+    const { id: userId } = req.params;
+    const { permissions } = req.body; // Asegúrate de que permissions sea un array
 
-    if (!moongose.Types.ObjectId.isValid(userId)) {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
         return res.status(404).json({ success: false, message: "Invalid User Id" });
     }
 
@@ -36,22 +37,26 @@ export const assignPermissions = async (req, res) => {
             return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        // Filtra los permisos para remover los especificados
-        user.permissions = user.permissions.filter(permission => !permissions.includes(permission));
+        // Agrega los nuevos permisos (evita duplicados)
+        permissions.forEach(permission => {
+            if (!user.permissions.includes(permission)) {
+                user.permissions.push(permission);
+            }
+        });
 
         await user.save();
         res.status(200).json({ success: true, data: user });
     } catch (error) {
-        console.log("Error revoking permissions:", error.message);
+        console.log("Error assigning permissions:", error.message);
         res.status(500).json({ success: false, message: "Server Error" });
     }
 }
 
 export const removePermissions = async (req, res) => {
-    const { userId } = req.params;
+    const { id: userId } = req.params;
     const { permissions } = req.body;
 
-    if (!moongose.Types.ObjectId.isValid(userId)) {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
         return res.status(404).json({ success: false, message: "Invalid User Id" });
     }
 
@@ -73,9 +78,9 @@ export const removePermissions = async (req, res) => {
 }
 
 export const getUserPermissions = async (req, res) => {
-    const { userId } = req.params;
+    const { id: userId } = req.params;
 
-    if (!moongose.Types.ObjectId.isValid(userId)) {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
         return res.status(404).json({ success: false, message: "Invalid User Id" });
     }
 

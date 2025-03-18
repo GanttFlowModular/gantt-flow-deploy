@@ -98,10 +98,10 @@ export const assignPermissions = async (userId: string, permissions: string[]) =
         const token = localStorage.getItem('token');
         const response = await axios.post(`${API_URL}/admin/users/${userId}/permissions`, { permissions }, {
             headers: {
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,'Content-Type': 'application/json',
             },
         });
-        return response.data.data;
+        return response.data;
     } catch (error) {
         console.error('Error al otorgar permisos:', error);
         throw error;

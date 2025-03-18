@@ -30,7 +30,7 @@ export default function Login() {
             if (response.user.role === 'admin') {
                 router.push('/admin/users'); // Redirigir a la interfaz de administrador
             } else {
-                router.push('/dashboard'); // Redirigir a la interfaz normal
+                router.push('/home'); // Redirigir a la interfaz normal
             }
         } catch (err) {
             setError('Error al iniciar sesión. Verifica tus credenciales.');

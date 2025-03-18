@@ -35,7 +35,7 @@ export default function ProfileDropdown({ name, email, onClick }: { name: string
                 <div className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden border-2 border-gray-200 hover:border-blue-500 transition-all">
                     {/* Replace with your image component */}
                     <img
-                        src="avatar.svg"
+                        src="/avatar.svg"
                         alt="Profile"
                         className="w-full h-full object-cover"
                     />

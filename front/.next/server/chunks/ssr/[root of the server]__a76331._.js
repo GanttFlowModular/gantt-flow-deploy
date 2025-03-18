@@ -265,13 +265,15 @@ const deleteUserAdmin = async (userId)=>{
 };
 const createUserAdmin = async (userData)=>{
     try {
+        console.log('Datos enviados al backend:', userData); // Log para depuración
         const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post(`${API_URL}/admin/users`, userData, {
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-        console.log('Respuesta del backend:', response.data.data);
-        return response.data.data;
+        console.log('Respuesta completa del backend:', response); // Log para depuración
+        console.log('Respuesta del backend (data):', response.data); // Log para depuración
+        return response.data; // Retornamos response.data (no response.data.data)
     } catch (error) {
         if (error instanceof Error) {
             console.error('Error al crear el usuario:', error.message);
@@ -289,10 +291,11 @@ const assignPermissions = async (userId, permissions)=>{
             permissions
         }, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
             }
         });
-        return response.data.data;
+        return response.data;
     } catch (error) {
         console.error('Error al otorgar permisos:', error);
         throw error;
@@ -375,7 +378,7 @@ function Login() {
             if (response.user.role === 'admin') {
                 router.push('/admin/users'); // Redirigir a la interfaz de administrador
             } else {
-                router.push('/dashboard'); // Redirigir a la interfaz normal
+                router.push('/home'); // Redirigir a la interfaz normal
             }
         } catch (err) {
             setError('Error al iniciar sesión. Verifica tus credenciales.');
