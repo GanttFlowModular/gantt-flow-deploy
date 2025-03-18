@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link"; // Import Link from Next.js
 import Button from "../../components/button";
+import ProfileDropdown from "@/components/profileDropdown";
 
 export default function Dashboard() {
     const { data: session, status } = useSession();
@@ -77,13 +78,7 @@ export default function Dashboard() {
                     />
                 </div>
                 <div className="space-x-16">
-                    <Button
-                        icon="/avatar.svg"
-                        iconWidth={40}
-                        iconHeight={40}
-                        bgColor="bg-transparent"
-                        border="border-none"
-                    />
+                    <ProfileDropdown />
                 </div>
             </header>
 

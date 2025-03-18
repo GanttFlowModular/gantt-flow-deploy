@@ -5,11 +5,12 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../../components/button";
+import ProfileDropdown from "@/components/profileDropdown";
 
 export default function Dashboard() {
     const router = useRouter();
     const [date, setDate] = useState('');
-    const [user, setUser] = useState<{ name: string } | null>(null);
+    const [user, setUser] = useState<{ name: string, email: string } | null>(null);
 
     useEffect(() => {
         // Obtener el token y los datos del usuario desde localStorage
@@ -92,12 +93,10 @@ export default function Dashboard() {
                     />
                 </div>
                 <div className="space-x-16">
-                    <Button
-                        icon="/avatar.svg"
-                        iconWidth={40}
-                        iconHeight={40}
-                        bgColor="bg-transparent"
-                        border="border-none"
+                    <ProfileDropdown
+                        name={user.name}
+                        email={user.email}
+                        onClick={handleLogout}
                     />
                 </div>
             </header>

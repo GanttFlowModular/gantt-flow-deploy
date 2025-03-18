@@ -14,10 +14,10 @@ const PORT = process.env.PORT || 5001;
 app.use(express.json());
 
 app.use("/api/users", usersRoutes);
-app.use("/api/admin", adminRoutes); 
-app.use("/api/admin", settingsRoutes); 
+app.use("/api/admin", adminRoutes);
+app.use("/api/settings", settingsRoutes);
 
-app.listen(5001, () => {
+app.listen(PORT, () => {
     connectToDB();
     console.log('Server started at http://localhost: ' + PORT);
 })

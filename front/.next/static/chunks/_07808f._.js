@@ -68,9 +68,13 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 {
 __turbopack_esm__({
     "createUser": (()=>createUser),
+    "createUserAdmin": (()=>createUserAdmin),
+    "deleteUserAdmin": (()=>deleteUserAdmin),
+    "getAllUsersAdmin": (()=>getAllUsersAdmin),
     "loginUser": (()=>loginUser),
     "resetPassword": (()=>resetPassword),
-    "sendRecoveryEmail": (()=>sendRecoveryEmail)
+    "sendRecoveryEmail": (()=>sendRecoveryEmail),
+    "updatedUserAdmin": (()=>updatedUserAdmin)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/axios/lib/axios.js [app-client] (ecmascript)");
 ;
@@ -107,6 +111,43 @@ const resetPassword = async (token, newPassword)=>{
             token,
             newPassword
         });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+const getAllUsersAdmin = async ()=>{
+    try {
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`${API_URL}/admin/users`);
+        return response.data.data; // Retorna la lista de usuarios
+    } catch (error) {
+        console.error('Error al obtener los usuarios:', error);
+        throw error; // Lanza el error para manejarlo en el componente
+    }
+};
+const updatedUserAdmin = async (userId, userData)=>{
+    try {
+        console.log('Enviando solicitud a:', `${API_URL}/admin/users/${userId}`); // Log para depuración
+        console.log('Datos enviados:', userData); // Log para depuración
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].put(`${API_URL}/admin/users/${userId}`, userData);
+        return response.data; // Retorna el usuario actualizado
+    } catch (error) {
+        console.error('Error al actualizar el usuario:', error);
+        throw error; // Lanza el error para manejarlo en el componente
+    }
+};
+const deleteUserAdmin = async (userId)=>{
+    try {
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].delete(`${API_URL}/admin/users/${userId}`);
+        return response.data; // Retorna la respuesta del backend
+    } catch (error) {
+        console.error('Error al eliminar el usuario:', error);
+        throw error; // Lanza el error para manejarlo en el componente
+    }
+};
+const createUserAdmin = async (userData)=>{
+    try {
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${API_URL}/admin/users`, userData);
         return response.data;
     } catch (error) {
         throw error;
