@@ -67,11 +67,14 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, k: __turbopack_refresh__, m: module, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
 __turbopack_esm__({
+    "assignPermissions": (()=>assignPermissions),
     "createUser": (()=>createUser),
     "createUserAdmin": (()=>createUserAdmin),
     "deleteUserAdmin": (()=>deleteUserAdmin),
     "getAllUsersAdmin": (()=>getAllUsersAdmin),
+    "getUserPermissions": (()=>getUserPermissions),
     "loginUser": (()=>loginUser),
+    "removePermissions": (()=>removePermissions),
     "resetPassword": (()=>resetPassword),
     "sendRecoveryEmail": (()=>sendRecoveryEmail),
     "updatedUserAdmin": (()=>updatedUserAdmin)
@@ -147,9 +150,67 @@ const deleteUserAdmin = async (userId)=>{
 };
 const createUserAdmin = async (userData)=>{
     try {
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${API_URL}/admin/users`, userData);
-        return response.data;
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${API_URL}/admin/users`, userData, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log('Respuesta del backend:', response.data.data);
+        return response.data.data;
     } catch (error) {
+        if (error instanceof Error) {
+            console.error('Error al crear el usuario:', error.message);
+            throw new Error(error.message);
+        } else {
+            console.error('Error desconocido:', error);
+            throw new Error('Ocurrió un error desconocido');
+        }
+    }
+};
+const assignPermissions = async (userId, permissions)=>{
+    try {
+        const token = localStorage.getItem('token');
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post(`${API_URL}/admin/users/${userId}/permissions`, {
+            permissions
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error al otorgar permisos:', error);
+        throw error;
+    }
+};
+const removePermissions = async (userId, permissions)=>{
+    try {
+        const token = localStorage.getItem('token');
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].delete(`${API_URL}/admin/users/${userId}/permissions`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            data: {
+                permissions
+            }
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error al remover permisos:', error);
+        throw error;
+    }
+};
+const getUserPermissions = async (userId)=>{
+    try {
+        const token = localStorage.getItem('token');
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get(`${API_URL}/admin/users/${userId}/permissions`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error al consultar permisos:', error);
         throw error;
     }
 };

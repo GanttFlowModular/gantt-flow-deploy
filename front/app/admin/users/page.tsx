@@ -96,11 +96,17 @@ export default function adminPage() {
     }
     const handleCreateUser = async () => {
         try {
-            const createdUser = await createUserAdmin(newUser); // Llama a la función createUser
-            setUsers([...users, createdUser]); // Agrega el nuevo usuario a la lista
-            closeCreateUserForm(); // Cierra el formulario de creación
+            const response = await createUserAdmin(newUser); // Llama a la función createUserAdmin
+            if (response && response.success) { // Verifica que la respuesta sea válida
+                alert(response.message); // Muestra un mensaje de éxito
+                closeCreateUserForm(); // Cierra el formulario de creación
+            } else {
+                console.error('Respuesta del backend no válida:', response);
+            }
         } catch (error) {
             console.error('Error al crear el usuario:', error);
+        } finally {
+            fetchUsers(); // Refrescar la lista de usuarios (se ejecuta siempre, haya o no error)
         }
     }
 
@@ -234,7 +240,7 @@ export default function adminPage() {
                             />
                             <span>Configuración</span>
                         </Link>
-                        <Link href="/admin/permissions" className="flex items-center space-x-1">
+                        <Link href="/admin/users/permissions" className="flex items-center space-x-1">
                             <Button
                                 icon="/permissions.svg"
                                 iconWidth={30}

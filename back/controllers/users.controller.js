@@ -161,6 +161,7 @@ export const createUser = async (req, res) => {
             email: user.email,
             mobile: user.mobile,
             password: hashedPassword, // Usar la contraseña hasheada
+            role: user.role,
             resetPasswordToken: null, // Campo para el token de restablecimiento (opcional, Mongoose lo hace por ti)
             resetPasswordExpires: null, // Campo para la fecha de expiración del token (opcional, Mongoose lo hace por ti)
         });

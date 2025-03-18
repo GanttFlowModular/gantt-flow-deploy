@@ -23,79 +23,71 @@ export const getUserById = async (req, res) => {
 }
 
 export const assignPermissions = async (req, res) => {
-    const { id } = req.params;
+    const { userId } = req.params;
     const { permissions } = req.body;
 
+    if (!moongose.Types.ObjectId.isValid(userId)) {
+        return res.status(404).json({ success: false, message: "Invalid User Id" });
+    }
+
     try {
-        const user = await User.findById(id);
+        const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
+            return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        // Agregar nuevos permisos (evitando duplicados)
-        user.permissions = [...new Set([...user.permissions, ...permissions])];
-        await user.save();
+        // Filtra los permisos para remover los especificados
+        user.permissions = user.permissions.filter(permission => !permissions.includes(permission));
 
+        await user.save();
         res.status(200).json({ success: true, data: user });
     } catch (error) {
-        console.log("error in assigning permissions:", error.message);
+        console.log("Error revoking permissions:", error.message);
         res.status(500).json({ success: false, message: "Server Error" });
     }
 }
 
 export const removePermissions = async (req, res) => {
-    const { id } = req.params;
+    const { userId } = req.params;
     const { permissions } = req.body;
 
+    if (!moongose.Types.ObjectId.isValid(userId)) {
+        return res.status(404).json({ success: false, message: "Invalid User Id" });
+    }
+
     try {
-        const user = await User.findById(id);
+        const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
+            return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        // Filtrar permisos para remover los especificados
-        user.permissions = user.permissions.filter(perm => !permissions.includes(perm));
-        await user.save();
+        // Filtra los permisos para remover los especificados
+        user.permissions = user.permissions.filter(permission => !permissions.includes(permission));
 
+        await user.save();
         res.status(200).json({ success: true, data: user });
     } catch (error) {
-        console.log("error in removing permissions:", error.message);
+        console.log("Error revoking permissions:", error.message);
         res.status(500).json({ success: false, message: "Server Error" });
     }
 }
 
 export const getUserPermissions = async (req, res) => {
-    const { id } = req.params;
+    const { userId } = req.params;
 
-    try {
-        const user = await User.findById(id);
-        if (!user) {
-            return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
-        }
-        res.status(200).json({ success: true, permissions: user.permissions });
-    } catch (error) {
-        console.log("error in fetching permissions:", error.message);
-        res.status(500).json({ success: false, message: "Server Error" });
+    if (!moongose.Types.ObjectId.isValid(userId)) {
+        return res.status(404).json({ success: false, message: "Invalid User Id" });
     }
-}
-
-export const updatePermissions = async (req, res) => {
-    const { id } = req.params;
-    const { permissions } = req.body;
 
     try {
-        const user = await User.findById(id);
+        const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
+            return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        // Reemplazar todos los permisos
-        user.permissions = permissions;
-        await user.save();
-
-        res.status(200).json({ success: true, data: user });
+        res.status(200).json({ success: true, data: user.permissions });
     } catch (error) {
-        console.log("error in updating permissions:", error.message);
+        console.log("Error fetching user permissions:", error.message);
         res.status(500).json({ success: false, message: "Server Error" });
     }
 }

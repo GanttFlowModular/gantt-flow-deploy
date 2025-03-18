@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const API_URL = 'http://localhost:5001/api'; // URL de tu backend
 
 export const createUser = async (userData: { name: string, email: string, mobile: string, password: string }) => {
@@ -70,11 +71,70 @@ export const deleteUserAdmin = async (userId: string) => {
     }
 }
 
-export const createUserAdmin = async (userData: { name: string, email: string, mobile: string, password: string }) => {
+export const createUserAdmin = async (userData: any) => {
     try {
-        const response = await axios.post(`${API_URL}/admin/users`, userData);
-        return response.data;
+        console.log('Datos enviados al backend:', userData); // Log para depuración
+        const response = await axios.post(`${API_URL}/admin/users`, userData, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        console.log('Respuesta completa del backend:', response); // Log para depuración
+        console.log('Respuesta del backend (data):', response.data); // Log para depuración
+        return response.data; // Retornamos response.data (no response.data.data)
     } catch (error) {
+        if (error instanceof Error) {
+            console.error('Error al crear el usuario:', error.message);
+            throw new Error(error.message);
+        } else {
+            console.error('Error desconocido:', error);
+            throw new Error('Ocurrió un error desconocido');
+        }
+    }
+}
+
+export const assignPermissions = async (userId: string, permissions: string[]) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(`${API_URL}/admin/users/${userId}/permissions`, { permissions }, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error al otorgar permisos:', error);
+        throw error;
+    }
+}
+
+export const removePermissions = async (userId: string, permissions: string[]) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.delete(`${API_URL}/admin/users/${userId}/permissions`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+            data: { permissions }, // Envía los permisos en el cuerpo de la solicitud DELETE
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error al remover permisos:', error);
+        throw error;
+    }
+}
+
+export const getUserPermissions = async (userId: string) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${API_URL}/admin/users/${userId}/permissions`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error al consultar permisos:', error);
         throw error;
     }
 }
