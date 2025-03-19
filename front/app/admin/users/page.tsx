@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getAllUsersAdmin, updatedUserAdmin, deleteUserAdmin, createUserAdmin } from "@/app/lib/api";
+import { usersAdmin } from "@/app/lib/api";
 import CascaronAdmin from "../cascaron/page";
 
 interface User {
@@ -29,7 +29,7 @@ export default function AdminUsersPage() {
     // Obtener usuarios desde el backend
     const fetchUsers = async () => {
         try {
-            const usersData = await getAllUsersAdmin();
+            const usersData = await usersAdmin.getAllUsersAdmin();
             console.log('Usuarios obtenidos:', usersData); // Log para depuración
             setUsers(usersData);
         } catch (error) {
@@ -45,7 +45,7 @@ export default function AdminUsersPage() {
     // Función para guardar los cambios de un usuario
     const handleSaveUser = async (updatedUser: User) => {
         try {
-            const savedUser = await updatedUserAdmin(updatedUser._id, updatedUser); // Llama a la función updateUser
+            const savedUser = await usersAdmin.updatedUserAdmin(updatedUser._id, updatedUser); // Llama a la función updateUser
             const updatedUsers = users.map((user) =>
                 user._id === savedUser._id ? savedUser : user
             );
@@ -64,7 +64,7 @@ export default function AdminUsersPage() {
             return; // Si el usuario cancela, no hacer nada
         }
         try {
-            await deleteUserAdmin(userId); // Llama a la función deleteUser
+            await usersAdmin.deleteUserAdmin(userId); // Llama a la función deleteUser
             if (editingUser?._id === userId) {
                 setEditingUser(null); // Limpiar el estado editingUser si el usuario eliminado estaba en edición
             }
@@ -104,7 +104,7 @@ export default function AdminUsersPage() {
             if (!['user', 'admin'].includes(newUser.role)) {
                 throw new Error('Rol no válido');
             }
-            const response = await createUserAdmin(newUser); // Llama a la función createUserAdmin
+            const response = await usersAdmin.createUserAdmin(newUser); // Llama a la función createUserAdmin
             if (response && response.success) { // Verifica que la respuesta sea válida
                 alert(response.message); // Muestra un mensaje de éxito
                 closeCreateUserForm(); // Cierra el formulario de creación

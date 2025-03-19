@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getAllUsersAdmin, assignPermissions, removePermissions, getUserPermissions } from "@/app/lib/api";
+import { usersAdmin, permissionsAdmin } from "@/app/lib/api";
 import CascaronAdmin from "../../cascaron/page";
 
 interface User {
@@ -25,7 +25,7 @@ export default function AdminPermissionsPage() {
     // Obtener usuarios desde el backend
     const fetchUsers = async () => {
         try {
-            const usersData = await getAllUsersAdmin();
+            const usersData = await usersAdmin.getAllUsersAdmin();
             console.log('Usuarios obtenidos:', usersData); // Log para depuración
             setUsers(usersData);
         } catch (error) {
@@ -37,7 +37,7 @@ export default function AdminPermissionsPage() {
     const loadUserPermissions = async () => {
         if (!selectedUserId) return;
         try {
-            const permissions = await getUserPermissions(selectedUserId);
+            const permissions = await permissionsAdmin.getUserPermissions(selectedUserId);
             setUserPermissions(permissions);
         } catch (error) {
             console.error('Error al cargar permisos:', error);
@@ -49,7 +49,7 @@ export default function AdminPermissionsPage() {
         if (!selectedUserId) return;
         try {
             console.log('Selected User ID:', selectedUserId);
-            await assignPermissions(selectedUserId, selectedPermissions);
+            await permissionsAdmin.assignPermissions(selectedUserId, selectedPermissions);
             await loadUserPermissions(); // Recargar permisos después de otorgar
         } catch (error) {
             console.error('Error al otorgar permisos:', error);
@@ -59,7 +59,7 @@ export default function AdminPermissionsPage() {
     // Remover permisos del usuario seleccionado
     const handleRevokePermissions = async () => {
         try {
-            await removePermissions(selectedUserId, selectedPermissions);
+            await permissionsAdmin.removePermissions(selectedUserId, selectedPermissions);
             await loadUserPermissions(); // Recargar permisos después de remover
         } catch (error) {
             console.error('Error al remover permisos:', error);

@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Button from '@/components/button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { resetPassword } from '@/app/lib/api';
+import { auth } from '@/app/lib/api';
 
 export default function ResetPassword() {
     const [newPassword, setNewPassword] = useState('');
@@ -26,7 +26,7 @@ export default function ResetPassword() {
         }
 
         try {
-            const data = await resetPassword(token!, newPassword);
+            const data = await auth.resetPassword(token!, newPassword);
             setMessage(data.message);
             router.push('/auth/login');
         } catch (err) {

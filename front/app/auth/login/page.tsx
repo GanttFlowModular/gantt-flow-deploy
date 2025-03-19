@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { loginUser  } from '../../lib/api';
+import { auth  } from '../../lib/api';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -19,7 +19,7 @@ export default function Login() {
         setError('');
 
         try {
-            const response = await loginUser ({ email, password });
+            const response = await auth.loginUser ({ email, password });
             console.log('Login exitoso:', response);
             console.log('Rol del usuario:', response.user.role);
 

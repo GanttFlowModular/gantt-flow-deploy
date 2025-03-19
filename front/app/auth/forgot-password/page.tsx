@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Button from '@/components/button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { sendRecoveryEmail } from '@/app/lib/api';
+import { auth } from '@/app/lib/api';
 
 export default function ForgotPassword() {
     const [email, setEmail] = useState('');
@@ -18,7 +18,7 @@ export default function ForgotPassword() {
         setError('');
 
         try {
-            const data = await sendRecoveryEmail(email);
+            const data = await auth.sendRecoveryEmail(email);
             setMessage(data.message);
         } catch (err) {
             if (err instanceof Error) {

@@ -15,7 +15,6 @@ app.use(express.json());
 
 app.use("/api/users", usersRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/settings", settingsRoutes);
 
 app.listen(PORT, () => {
     connectToDB();

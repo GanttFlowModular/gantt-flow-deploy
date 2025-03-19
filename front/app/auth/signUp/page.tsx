@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createUser } from '../../lib/api';
+import { auth } from '../../lib/api';
 
 export default function SignUp() {
     const [name, setName] = useState('');
@@ -20,7 +20,7 @@ export default function SignUp() {
         setError('');
 
         try {
-            const response = await createUser({ name, email, mobile, password });
+            const response = await auth.createUser({ name, email, mobile, password });
             console.log('Registro exitoso:', response);
             router.push('/auth/login');
         } catch (err) {
