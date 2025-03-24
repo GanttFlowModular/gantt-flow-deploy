@@ -1,4 +1,4 @@
-import User from '../model/users.model..js';
+import User from '../model/users.model.js';
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import { createUser, deleteUser, getUsers, updatedUser } from "../controllers/users.controller.js";

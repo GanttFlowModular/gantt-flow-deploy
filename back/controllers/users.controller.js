@@ -1,4 +1,4 @@
-import User from '../model/users.model..js';
+import User from '../model/users.model.js';
 import moongose from 'mongoose';
 import bcrypt from 'bcrypt'; // Para comparar y hashear contraseñas
 import jwt from 'jsonwebtoken'; // Para generar tokens JWT
@@ -16,40 +16,40 @@ export const getUsers = async (req, res) => {
 }
 
 export const sendRecoveryEmail = async (req, res) => {
-  const { email } = req.body;
+    const { email } = req.body;
 
-  try {
-    // Buscar al usuario por su correo
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
-    }
+    try {
+        // Buscar al usuario por su correo
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
+        }
 
-    // Generar un token único
-    const resetToken = crypto.randomBytes(20).toString('hex');
-    const resetTokenExpiry = Date.now() + 3600000; // 1 hora de validez
+        // Generar un token único
+        const resetToken = crypto.randomBytes(20).toString('hex');
+        const resetTokenExpiry = Date.now() + 3600000; // 1 hora de validez
 
-    // Guardar el token en la base de datos
-    user.resetPasswordToken = resetToken;
-    user.resetPasswordExpires = resetTokenExpiry;
-    await user.save();
+        // Guardar el token en la base de datos
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordExpires = resetTokenExpiry;
+        await user.save();
 
-    // Enviar el correo con el enlace de restablecimiento
-    const transporter = nodemailer.createTransport({
-      service: 'Gmail', // O el servicio que uses
-      auth: {
-        user: process.env.EMAIL_USER, // Tu correo
-        pass: process.env.EMAIL_PASS, // Tu contraseña
-      },
-    });
+        // Enviar el correo con el enlace de restablecimiento
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail', // O el servicio que uses
+            auth: {
+                user: process.env.EMAIL_USER, // Tu correo
+                pass: process.env.EMAIL_PASS, // Tu contraseña
+            },
+        });
 
-    const resetUrl = `http://localhost:3000/auth/reset-password?token=${resetToken}`;
+        const resetUrl = `http://localhost:3000/auth/reset-password?token=${resetToken}`;
 
-    const mailOptions = {
-      to: user.email,
-      from: process.env.EMAIL_USER,
-      subject: 'Restablecimiento de contraseña Gantt-Flow',
-      html: `
+        const mailOptions = {
+            to: user.email,
+            from: process.env.EMAIL_USER,
+            subject: 'Restablecimiento de contraseña Gantt-Flow',
+            html: `
                 <div style="font-family: Arial, sans-serif; color: #333;">
                     <h2 style="color: #4CAF50;">Hola, ${user.name}</h2>
                     <p>Hemos recibido una solicitud para restablecer tu contraseña en <strong>Gantt-Flow</strong>.</p>
@@ -64,46 +64,46 @@ export const sendRecoveryEmail = async (req, res) => {
                     <p>El equipo de <strong>Gantt-Flow</strong></p>
                 </div>
             `,
-    };
+        };
 
-    await transporter.sendMail(mailOptions);
+        await transporter.sendMail(mailOptions);
 
-    res.status(200).json({ success: true, message: 'Correo de restablecimiento enviado' });
-  } catch (error) {
-    console.error('Error al enviar el correo de recuperación:', error.message);
-    res.status(500).json({ success: false, message: 'Error en el servidor' });
-  }
+        res.status(200).json({ success: true, message: 'Correo de restablecimiento enviado' });
+    } catch (error) {
+        console.error('Error al enviar el correo de recuperación:', error.message);
+        res.status(500).json({ success: false, message: 'Error en el servidor' });
+    }
 };
 
 // Función para restablecer la contraseña
 export const resetPassword = async (req, res) => {
-  const { token, newPassword } = req.body;
+    const { token, newPassword } = req.body;
 
-  try {
-    // Buscar al usuario por el token y verificar que no haya expirado
-    const user = await User.findOne({
-      resetPasswordToken: token,
-      resetPasswordExpires: { $gt: Date.now() }, // Verificar que el token no haya expirado
-    });
+    try {
+        // Buscar al usuario por el token y verificar que no haya expirado
+        const user = await User.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() }, // Verificar que el token no haya expirado
+        });
 
-    if (!user) {
-      return res.status(400).json({ success: false, message: 'Token inválido o expirado' });
+        if (!user) {
+            return res.status(400).json({ success: false, message: 'Token inválido o expirado' });
+        }
+
+        // Hashear la nueva contraseña
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        // Actualizar la contraseña y limpiar el token
+        user.password = hashedPassword;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+        await user.save();
+
+        res.status(200).json({ success: true, message: 'Contraseña restablecida exitosamente' });
+    } catch (error) {
+        console.error('Error al restablecer la contraseña:', error.message);
+        res.status(500).json({ success: false, message: 'Error en el servidor' });
     }
-
-    // Hashear la nueva contraseña
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    // Actualizar la contraseña y limpiar el token
-    user.password = hashedPassword;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
-    await user.save();
-
-    res.status(200).json({ success: true, message: 'Contraseña restablecida exitosamente' });
-  } catch (error) {
-    console.error('Error al restablecer la contraseña:', error.message);
-    res.status(500).json({ success: false, message: 'Error en el servidor' });
-  }
 };
 
 export const loginUser = async (req, res) => {
@@ -126,10 +126,10 @@ export const loginUser = async (req, res) => {
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         // Enviar respuesta exitosa
-        res.status(200).json({ 
+        res.status(200).json({
             success: true,
-            token, 
-            user: { id: user._id, name: user.name, email: user.email, role: user.role } 
+            token,
+            user: { id: user._id, name: user.name, email: user.email, role: user.role }
         });
     } catch (error) {
         console.error('Error en login:', error.message);
