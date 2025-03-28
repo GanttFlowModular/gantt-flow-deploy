@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5001/api'; // URL de tu backend
+const API_URL = process.env.NEXT_PUBLIC_API_URL ||'http://localhost:5001/api'; // URL de tu backend
 
 export const createUser = async (userData: { name: string, email: string, mobile: string, password: string }) => {
     try {

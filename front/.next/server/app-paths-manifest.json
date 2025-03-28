@@ -1,8 +1,9 @@
 {
-  "/auth/login/page": "app/auth/login/page.js",
+  "/admin/users/page": "app/admin/users/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/auth/login/page": "app/auth/login/page.js",
+  "/admin/users/permissions/page": "app/admin/users/permissions/page.js",
   "/home/page": "app/home/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/home/gantt/page": "app/home/gantt/page.js"
+  "/page": "app/page.js"
 }

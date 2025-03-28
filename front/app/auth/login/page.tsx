@@ -25,6 +25,7 @@ export default function Login() {
 
             localStorage.setItem('token', response.token);
             localStorage.setItem('user', JSON.stringify(response.user));
+            console.log(localStorage.getItem('token'));
 
             // Verificar el rol del usuario
             if (response.user.role === 'admin') {

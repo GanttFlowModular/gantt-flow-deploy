@@ -1,50 +1,49 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:5001/api'; // URL de tu backend
+import api from '@/app/lib/api';
 
 export const getAllUsersAdmin = async () => {
     try {
-        const response = await axios.get(`${API_URL}/admin/users`);
-        return response.data.data; // Retorna la lista de usuarios
+        // Usa api en lugar de axios
+        const response = await api.get('/admin/users');  // Nota que la URL es relativa
+        return response.data.data;
     } catch (error) {
         console.error('Error al obtener los usuarios:', error);
-        throw error; // Lanza el error para manejarlo en el componente
+        throw error;
     }
 }
 
 export const updatedUserAdmin = async (userId: string, userData: any) => {
     try {
-        console.log('Enviando solicitud a:', `${API_URL}/admin/users/${userId}`); // Log para depuración
-        console.log('Datos enviados:', userData); // Log para depuración
-        const response = await axios.put(`${API_URL}/admin/users/${userId}`, userData);
-        return response.data; // Retorna el usuario actualizado
+        console.log('Enviando solicitud a:', `/admin/users/${userId}`);
+        console.log('Datos enviados:', userData);
+        const response = await api.put(`/admin/users/${userId}`, userData);
+        return response.data;
     } catch (error) {
         console.error('Error al actualizar el usuario:', error);
-        throw error; // Lanza el error para manejarlo en el componente
+        throw error;
     }
 }
 
 export const deleteUserAdmin = async (userId: string) => {
     try {
-        const response = await axios.delete(`${API_URL}/admin/users/${userId}`);
-        return response.data; // Retorna la respuesta del backend
+        const response = await api.delete(`/admin/users/${userId}`);
+        return response.data;
     } catch (error) {
         console.error('Error al eliminar el usuario:', error);
-        throw error; // Lanza el error para manejarlo en el componente
+        throw error;
     }
 }
 
 export const createUserAdmin = async (userData: any) => {
     try {
-        console.log('Datos enviados al backend:', userData); // Log para depuración
-        const response = await axios.post(`${API_URL}/admin/users`, userData, {
+        console.log('Datos enviados al backend:', userData);
+        const response = await api.post('/admin/users', userData, {
             headers: {
                 'Content-Type': 'application/json',
             },
         });
-        console.log('Respuesta completa del backend:', response); // Log para depuración
-        console.log('Respuesta del backend (data):', response.data); // Log para depuración
-        return response.data; // Retornamos response.data (no response.data.data)
+        console.log('Respuesta completa del backend:', response);
+        console.log('Respuesta del backend (data):', response.data);
+        return response.data;
     } catch (error) {
         if (error instanceof Error) {
             console.error('Error al crear el usuario:', error.message);
