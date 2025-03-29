@@ -1,12 +1,8 @@
 import express from 'express';
 import { createUserAdmin, getAllUsersAdmin, getUserById, updatedUserAdmin, deleteUserAdmin, assignPermissions, removePermissions, getUserPermissions } from '../controllers/admin.controller.js';
-import {adminAuthMiddleware} from '../middlewares/adminCheck.js';
 //import { getSettings, updateSettings, monitorSystem, performMaintenance } from '../controllers/settings.controller.js';
 
 const router = express.Router();
-
-// Todas las rutas protegidas
-router.use(adminAuthMiddleware); 
 
 // Rutas para gestionar usuarios
 router.post('/users', createUserAdmin); // Crear un nuevo usuario

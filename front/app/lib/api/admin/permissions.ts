@@ -1,9 +1,11 @@
-import api from '@/app/lib/api';
+import axios from 'axios';
+
+const API_URL = 'http://localhost:5001/api'; // URL de tu backend
 
 export const assignPermissions = async (userId: string, permissions: string[]) => {
     try {
         const token = localStorage.getItem('token');
-        const response = await api.post(`/admin/users/${userId}/permissions`, { permissions }, {
+        const response = await axios.post(`${API_URL}/admin/users/${userId}/permissions`, { permissions }, {
             headers: {
                 'Authorization': `Bearer ${token}`,'Content-Type': 'application/json',
             },
@@ -18,7 +20,7 @@ export const assignPermissions = async (userId: string, permissions: string[]) =
 export const removePermissions = async (userId: string, permissions: string[]) => {
     try {
         const token = localStorage.getItem('token');
-        const response = await api.delete(`/admin/users/${userId}/permissions`, {
+        const response = await axios.delete(`${API_URL}/admin/users/${userId}/permissions`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             },
@@ -34,7 +36,7 @@ export const removePermissions = async (userId: string, permissions: string[]) =
 export const getUserPermissions = async (userId: string) => {
     try {
         const token = localStorage.getItem('token');
-        const response = await api.get(`/admin/users/${userId}/permissions`, {
+        const response = await axios.get(`${API_URL}/admin/users/${userId}/permissions`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             },
