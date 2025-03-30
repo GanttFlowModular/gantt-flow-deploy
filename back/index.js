@@ -8,22 +8,28 @@ import adminRoutes from './routes/admin.route.js';
 dotenv.config();
 const app = express();
 
-// Configura CORS para permitir headers personalizados
+// Configuración dinámica para CORS
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
+
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: FRONTEND_URL,
     methods: ['*'],
-    allowedHeaders: ['Content-Type', 'Authorization','x-auth-token'], // Permite el header Authorization
-    exposedHeaders: ['Content-Length', 'X-Powered-By'], // Evitar leaks
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
+    exposedHeaders: ['Content-Length', 'X-Powered-By'],
     credentials: true
 }));
+
 const PORT = process.env.PORT || 5001;
 
 app.use(express.json());
 
+// Rutas
 app.use("/api/users", usersRoutes);
 app.use("/api/admin", adminRoutes);
 
+// Inicio del servidor
 app.listen(PORT, () => {
     connectToDB();
-    console.log('Server started at http://localhost: ' + PORT);
-})
+    console.log(`Server running on port ${PORT}`);
+    console.log(`CORS configured for origin: ${FRONTEND_URL}`);
+});
