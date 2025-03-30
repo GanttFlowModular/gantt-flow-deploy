@@ -6,7 +6,7 @@
   "path": "static/chunks/app_auth_forgot-password_page_tsx_ad07e1._.js",
   "chunks": [
     "static/chunks/node_modules_129e8f._.js",
-    "static/chunks/_d0821f._.js"
+    "static/chunks/_b7ce4d._.js"
   ],
   "source": "dynamic"
 });

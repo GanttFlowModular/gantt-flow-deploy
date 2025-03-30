@@ -45,9 +45,9 @@ export default function CascaronAdmin({ children }: { children: React.ReactNode 
         // Eliminar el token y los datos del usuario de localStorage
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-
-        // Redirigir al login
-        router.push('/auth/login');
+        localStorage.removeItem('next-auth.session-token');
+        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        window.location.href = '/auth/login';
     };
 
     if (!user) {
@@ -129,15 +129,15 @@ export default function CascaronAdmin({ children }: { children: React.ReactNode 
                             />
                             <span>Usuarios</span>
                         </Link>
-                        <Link href="/admin/settings" className="flex items-center space-x-1">
+                        <Link href="/admin/audit" className="flex items-center space-x-1">
                             <Button
-                                icon="/settings.svg"
+                                icon="/audit.svg"
                                 iconWidth={30}
                                 iconHeight={30}
                                 bgColor="bg-transparent"
                                 border="border-none"
                             />
-                            <span>Configuración</span>
+                            <span>Auditoría</span>
                         </Link>
                         <Link href="/admin/users/permissions" className="flex items-center space-x-1">
                             <Button

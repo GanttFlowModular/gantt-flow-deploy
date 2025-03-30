@@ -1,8 +1,11 @@
 import express from 'express';
-import { createUserAdmin, getAllUsersAdmin, getUserById, updatedUserAdmin, deleteUserAdmin, assignPermissions, removePermissions, getUserPermissions } from '../controllers/admin.controller.js';
-//import { getSettings, updateSettings, monitorSystem, performMaintenance } from '../controllers/settings.controller.js';
+import { createUserAdmin, getAllUsersAdmin, getUserById, updatedUserAdmin, deleteUserAdmin, assignPermissions, removePermissions, getUserPermissions, auditRoute } from '../controllers/admin.controller.js';
+import {adminAuthMiddleware} from '../middlewares/adminCheck.js';
 
 const router = express.Router();
+
+// Todas las rutas protegidas
+router.use(adminAuthMiddleware); 
 
 // Rutas para gestionar usuarios
 router.post('/users', createUserAdmin); // Crear un nuevo usuario
@@ -16,14 +19,7 @@ router.post('/users/:id/permissions', assignPermissions); // Asignar permisos
 router.delete('/users/:id/permissions', removePermissions); // Remover permisos
 router.get('/users/:id/permissions',getUserPermissions);
 
-// Ruta para obtener y actualizar los ajustes del sistema
-//router.get('/settings',getSettings);
-//router.post('/settings',updateSettings); 
-
-// Ruta para monitorear el sistema
-//router.get('/settings/monitor', monitorSystem);
-
-// Ruta para realizar mantenimiento
-//router.post('/settings/maintenance', performMaintenance);
+//Ruta para auditoría
+router.get('/audit', auditRoute);
 
 export default router;
